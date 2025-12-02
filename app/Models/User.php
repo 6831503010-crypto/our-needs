@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -44,5 +45,54 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // === Role helpers ===
+    public function isStudent(): bool
+    {
+        return $this->role === 'student';
+    }
+
+    public function isTeacher(): bool
+    {
+        return $this->role === 'teacher';
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    // === Profiles ===
+    public function studentProfile()
+    {
+        return $this->hasOne(StudentProfile::class);
+    }
+
+    public function teacherProfile()
+    {
+        return $this->hasOne(TeacherProfile::class);
+    }
+
+    // === Teaching / managing ===
+    public function quizzesTeaching()
+    {
+        return $this->hasMany(Quiz::class, 'teacher_id');
+    }
+
+    public function eventsCreated()
+    {
+        return $this->hasMany(Event::class, 'created_by');
+    }
+
+    // === As student ===
+    public function quizAttempts()
+    {
+        return $this->hasMany(QuizAttempt::class, 'student_id');
+    }
+
+    public function eventReservations()
+    {
+        return $this->hasMany(EventReservation::class, 'student_id');
     }
 }
