@@ -18,11 +18,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
-            // roles: student / teacher / admin
-            $table->enum('role', ['student', 'teacher', 'admin'])
-                ->default('student')
-                ->index();
-
             $table->rememberToken();
             $table->timestamps();
         });
