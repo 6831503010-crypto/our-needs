@@ -31,6 +31,29 @@ export default function AuthenticatedLayout({ header, children }) {
                                     Dashboard
                                 </NavLink>
                             </div>
+                            {user?.roles?.includes("student") && (
+                                <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                    <NavLink>
+                                        Student tab
+                                    </NavLink>
+                                </div>
+                            )}
+
+                            {user?.roles?.includes("teacher") && (
+                                <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                    <NavLink>
+                                        Teacher tab
+                                    </NavLink>
+                                </div>
+                            )}
+
+                            {user?.roles?.includes("admin") && (
+                                <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink>
+                                        Admin tab
+                                    </NavLink>
+                                </div>
+                            )}
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
