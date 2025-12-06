@@ -14,37 +14,37 @@ class AdminUsersSeeder extends Seeder
         // Make sure the admin role exists
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
 
-        $users = [
+        $admins = [
             [
-                'name' => 'Kenny',
-                'email' => 'kenny@example.com',
+                'name' => 'Admin Kenny',
+                'email' => 'adminkenny@example.com',
             ],
             [
-                'name' => 'Vinny',
-                'email' => 'vinny@example.com',
+                'name' => 'Admin Vinny',
+                'email' => 'adminvinny@example.com',
             ],
             [
-                'name' => 'Rex',
-                'email' => 'rex@example.com',
+                'name' => 'Admin Rex',
+                'email' => 'adminrex@example.com',
             ],
             [
-                'name' => 'Saw Keh',
-                'email' => 'sawkeh@example.com',
+                'name' => 'Admin Saw Keh',
+                'email' => 'adminsawkeh@example.com',
             ],
         ];
 
-        foreach ($users as $userData) {
-            $user = User::firstOrCreate(
-                ['email' => $userData['email']],
+        foreach ($admins as $admin) {
+            $admin = User::firstOrCreate(
+                ['email' => $admin['email']],
                 [
-                    'name' => $userData['name'],
+                    'name' => $admin['name'],
                     'password' => Hash::make('Password'),
                 ]
             );
 
             // Assign admin role
-            if (!$user->hasRole('admin')) {
-                $user->assignRole('admin');
+            if (!$admin->hasRole('admin')) {
+                $admin->assignRole('admin');
             }
         }
     }
