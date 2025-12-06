@@ -1,0 +1,50 @@
+<svg width="280" height="90" viewBox="0 0 280 90" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Gradient -->
+  <defs>
+    <linearGradient id="on-grad" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1" />
+      <stop offset="100%" stop-color="#A855F7" />
+    </linearGradient>
+  </defs>
+
+  <!-- Cute Book Mascot -->
+  <g transform="translate(10, 10)">
+    <!-- Book body -->
+    <rect x="0" y="0" width="60" height="70" rx="10" fill="url(#on-grad)" opacity="0.9" />
+
+    <!-- Book spine -->
+    <rect x="0" y="0" width="12" height="70" rx="10" fill="#ffffff22" />
+
+    <!-- Eyes -->
+    <circle cx="30" cy="28" r="5" fill="white"/>
+    <circle cx="45" cy="28" r="5" fill="white"/>
+
+    <!-- Pupils -->
+    <circle cx="30" cy="28" r="2.5" fill="#4B3F72"/>
+    <circle cx="45" cy="28" r="2.5" fill="#4B3F72"/>
+
+    <!-- Smile -->
+    <path d="M28 42 Q 37 48 47 42" stroke="white" stroke-width="3" stroke-linecap="round" />
+
+  </g>
+
+  <!-- Wordmark: OUR NEEDS -->
+  <text x="90" y="50"
+        font-family="Poppins, Inter, sans-serif"
+        font-size="38"
+        font-weight="700"
+        fill="url(#on-grad)">
+      Our
+  </text>
+
+  <text x="165" y="50"
+        font-family="Poppins, Inter, sans-serif"
+        font-size="38"
+        font-weight="600"
+        fill="url(#on-grad)"
+        opacity="0.9">
+      Needs
+  </text>
+
+</svg>
