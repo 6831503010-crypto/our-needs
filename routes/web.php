@@ -10,8 +10,6 @@ use App\Http\Controllers\QuizAttemptController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
@@ -78,9 +76,7 @@ Route::controller(EventResponseController::class)->group(function () {
     Route::get('/events', 'show');
 });
 
-// Testing
-Route::get('/users', function () {
-    $users = User::all();
-    return response()->json($users);
-});
+
+
 require __DIR__ . '/auth.php';
+require __DIR__ . '/student.php';

@@ -10,7 +10,9 @@ class EventResponseController extends Controller
 {
     public function show(Request $request)
     {
-        //
+
+        $events = EventReservation::all();
+        return response()->json($events);
     }
 
     public function store(Request $request)

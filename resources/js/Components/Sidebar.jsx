@@ -1,11 +1,10 @@
 import { Link, usePage } from '@inertiajs/react';
 import NavLink from '@/Components/NavLink';
 import {
-    HomeIcon,
     ClipboardDocumentListIcon,
     CalendarDaysIcon,
     AcademicCapIcon,
-    BookmarkIcon,
+    NumberedListIcon,
     UsersIcon,
     UserGroupIcon,
     ShieldCheckIcon,
@@ -18,9 +17,9 @@ export default function Sidebar() {
     const user = usePage().props.auth.user;
 
     const rolesGroupActive =
-    route().current('admin.roles.index') ||
-    route().current('admin.permissions.index') ||
-    route().current('admin.role-assignments.index');
+        route().current('admin.roles.index') ||
+        route().current('admin.permissions.index') ||
+        route().current('admin.role-assignments.index');
 
 
     return (
@@ -66,48 +65,57 @@ export default function Sidebar() {
                 <div className="flex flex-col space-y-1 text-sm">
                     {user?.roles?.includes("student") && (
                         <>
-                        <NavLink
-                            href="#"
-                            className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                        >
-                            <ClipboardDocumentListIcon className="w-5 h-5 text-indigo-600" />
-                            Quizzes
-                        </NavLink>
+                            <NavLink
+                                href="#"
+                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
+                            >
+                                <ClipboardDocumentListIcon className="w-5 h-5 text-indigo-600" />
+                                Quizzes
+                            </NavLink>
 
-                        <NavLink
-                            href="#"
-                            className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                        >
-                            <CalendarDaysIcon className="w-5 h-5 text-indigo-600" />
-                            Events
-                        </NavLink>
+                            <NavLink
+                                href="#"
+                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
+                            >
+                                <CalendarDaysIcon className="w-5 h-5 text-indigo-600" />
+                                Events
+                            </NavLink>
+
+                            <NavLink
+                                href={route('student.sections')}
+                                active={route().current('student.sections')}
+                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
+                            >
+                                <NumberedListIcon className="w-5 h-5 text-indigo-600" />
+                                Courses
+                            </NavLink>
                         </>
                     )}
                     {user?.roles?.includes("teacher") && (
                         <>
-                        <NavLink
-                            href="#"
-                            className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                        >
-                            <ClipboardDocumentListIcon className="w-5 h-5 text-indigo-600" />
-                            Quizzes
-                        </NavLink>
-
-                        <NavLink
-                            href="#"
-                            className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                        >
-                            <CalendarDaysIcon className="w-5 h-5 text-indigo-600" />
-                            Events
+                            <NavLink
+                                href="#"
+                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
+                            >
+                                <ClipboardDocumentListIcon className="w-5 h-5 text-indigo-600" />
+                                Quizzes
                             </NavLink>
 
-                        <NavLink
-                            href="#"
-                            className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                        >
-                            <UsersIcon className="w-5 h-5 text-indigo-600" />
-                            Manage Students
-                        </NavLink>
+                            <NavLink
+                                href="#"
+                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
+                            >
+                                <CalendarDaysIcon className="w-5 h-5 text-indigo-600" />
+                                Events
+                            </NavLink>
+
+                            <NavLink
+                                href="#"
+                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
+                            >
+                                <UsersIcon className="w-5 h-5 text-indigo-600" />
+                                Manage Students
+                            </NavLink>
                         </>
                     )}
                     {user?.roles?.includes("admin") && (
@@ -117,7 +125,7 @@ export default function Sidebar() {
                                 active={route().current('admin.analytics')}
                                 className="flex items-center gap-3 rounded-md px-3 py-2 text-black hover:bg-slate-100 transition"
                             >
-                                <ChartBarIcon className="w-5 h-5 text-indigo-600"/>
+                                <ChartBarIcon className="w-5 h-5 text-indigo-600" />
                                 Analytics
                             </NavLink>
 

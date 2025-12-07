@@ -20,4 +20,14 @@ class StudentProfile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function subjectSections()
+    {
+        return $this->belongsToMany(Section::class, 'student_subject_sections', 'student_id', ' section_id')->withPivot('subject_id')->with('subject', 'teacher');
+    }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'student_subject_sections', ' student_id', 'subject_id');
+    }
 }

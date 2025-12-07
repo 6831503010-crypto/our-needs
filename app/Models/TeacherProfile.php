@@ -20,4 +20,9 @@ class TeacherProfile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function section()
+    {
+        return $this->hasMany(Section::class);
+    }
 }
