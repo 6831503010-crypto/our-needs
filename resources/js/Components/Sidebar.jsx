@@ -11,10 +11,17 @@ import {
     ShieldCheckIcon,
     ChartBarIcon,
 } from '@heroicons/react/24/outline';
+import SidebarDropdown from '@/Components/SidebarDropdown';
 
 
 export default function Sidebar() {
     const user = usePage().props.auth.user;
+
+    const rolesGroupActive =
+    route().current('admin.roles.index') ||
+    route().current('admin.permissions.index') ||
+    route().current('admin.role-assignments.index');
+
 
     return (
         // <aside className="w-64 bg-slate-900 text-slate-100 min-h-[calc(100vh-4rem)] flex flex-col">
@@ -106,8 +113,8 @@ export default function Sidebar() {
                     {user?.roles?.includes("admin") && (
                         <>
                             <NavLink
-                                href={route('dashboard')}
-                                active={route().current('dashboard')}
+                                href={route('admin.analytics')}
+                                active={route().current('admin.analytics')}
                                 className="flex items-center gap-3 rounded-md px-3 py-2 text-black hover:bg-slate-100 transition"
                             >
                                 <ChartBarIcon className="w-5 h-5 text-indigo-600"/>
@@ -115,7 +122,8 @@ export default function Sidebar() {
                             </NavLink>
 
                             <NavLink
-                                href="#"
+                                href={route('admin.students.index')}
+                                active={route().current('admin.students.index')}
                                 className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
                             >
                                 <UsersIcon className="w-5 h-5 text-indigo-600" />
@@ -123,7 +131,8 @@ export default function Sidebar() {
                             </NavLink>
 
                             <NavLink
-                                href="#"
+                                href={route('admin.teachers.index')}
+                                active={route().current('admin.teachers.index')}
                                 className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
                             >
                                 <AcademicCapIcon className="w-5 h-5 text-indigo-600" />
@@ -131,23 +140,42 @@ export default function Sidebar() {
                             </NavLink>
 
                             <NavLink
-                                href="#"
+                                href={route('admin.users.index')}
+                                active={route().current('admin.users.index')}
                                 className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
                             >
                                 <UserGroupIcon className="w-5 h-5 text-indigo-600" />
                                 Manage Users
                             </NavLink>
 
-                            <NavLink
-                                href="#"
-                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                            >
-                                <ShieldCheckIcon className="w-5 h-5 text-indigo-600" />
-                                Roles & Permissions
-                            </NavLink>
+                            <SidebarDropdown
+                                label="Roles & Permissions" icon={ShieldCheckIcon} isActiveGroup={rolesGroupActive}>
+                                <NavLink
+                                    href={route('admin.roles.index')}
+                                    active={route().current('admin.roles.index')}
+                                    className="flex items-center gap-2 rounded-md px-3 py-1.5 text-gray-600 hover:text-gray-900 hover:bg-slate-50"
+                                >
+                                    Manage Roles
+                                </NavLink>
+
+                                <NavLink
+                                    href={route('admin.permissions.index')}
+                                    active={route().current('admin.permissions.index')}
+                                    className="flex items-center gap-2 rounded-md px-3 py-1.5 text-gray-600 hover:text-gray-900 hover:bg-slate-50"
+                                >
+                                    Manage Permissions
+                                </NavLink>
+
+                                <NavLink
+                                    href={route('admin.role-assignments.index')}
+                                    active={route().current('admin.role-assignments.index')}
+                                    className="flex items-center gap-2 rounded-md px-3 py-1.5 text-gray-600 hover:text-gray-900 hover:bg-slate-50"
+                                >
+                                    Assign Roles to Users
+                                </NavLink>
+                            </SidebarDropdown>
                         </>
                     )}
-
                 </div>
             </nav>
 
