@@ -51,14 +51,14 @@ class User extends Authenticatable
     }
 
     // === Profiles ===
-    public function studentProfile()
+    public function student()
     {
-        return $this->hasOne(StudentProfile::class);
+        return $this->hasOne(Student::class);
     }
 
-    public function teacherProfile()
+    public function teacher()
     {
-        return $this->hasOne(TeacherProfile::class);
+        return $this->hasOne(Teacher::class);
     }
 
     // === Teaching / managing ===

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Teacher;
 use App\Models\QuizAttempt;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,7 +34,7 @@ class Quiz extends Model
 
     public function teacher()
     {
-        return $this->belongsTo(User::class, 'teacher_id');
+        return $this->belongsTo(Teacher::class);
     }
 
     public function attempts()

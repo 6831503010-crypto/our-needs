@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Section extends Model
 {
@@ -18,11 +19,11 @@ class Section extends Model
 
     public function teacher()
     {
-        return $this->belongsTo(TeacherProfile::class);
+        return $this->belongsTo(Teacher::class);
     }
 
     public function students()
     {
-        return $this->belongsToMany(StudentProfile::class, 'student_subject_sections', 'section_id', 'student_id')->withPivot('subject_id');
+        return $this->belongsToMany(Student::class, 'student_subject_sections', 'section_id', 'student_id')->withPivot('subject_id');
     }
 }
