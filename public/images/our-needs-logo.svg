@@ -8,29 +8,16 @@
     </linearGradient>
   </defs>
 
-  <!-- Cute Book Mascot -->
-  <g transform="translate(10, 10)">
-    <!-- Book body -->
-    <rect x="0" y="0" width="60" height="70" rx="10" fill="url(#on-grad)" opacity="0.9" />
-
-    <!-- Book spine -->
-    <rect x="0" y="0" width="12" height="70" rx="10" fill="#ffffff22" />
-
-    <!-- Eyes -->
-    <circle cx="30" cy="28" r="5" fill="white"/>
-    <circle cx="45" cy="28" r="5" fill="white"/>
-
-    <!-- Pupils -->
-    <circle cx="30" cy="28" r="2.5" fill="#4B3F72"/>
-    <circle cx="45" cy="28" r="2.5" fill="#4B3F72"/>
-
-    <!-- Smile -->
-    <path d="M28 42 Q 37 48 47 42" stroke="white" stroke-width="3" stroke-linecap="round" />
-
+  <!-- Backpack Mascot -->
+  <g transform="translate(18, 12) scale(2.2)">
+    <rect x="5" y="8" width="14" height="12" rx="4" fill="none" stroke="url(#on-grad)" stroke-width="1.6"/>
+    <path d="M9 8a3 3 0 016 0" stroke="url(#on-grad)" fill="none" stroke-linecap="round" stroke-width="1.6"/>
+    <circle cx="9" cy="12" r="1.2" fill="url(#on-grad)"/>
+    <circle cx="15" cy="12" r="1.2" fill="url(#on-grad)"/>
   </g>
 
   <!-- Wordmark: OUR NEEDS -->
-  <text x="90" y="50"
+  <text x="70" y="50"
         font-family="Poppins, Inter, sans-serif"
         font-size="38"
         font-weight="700"
@@ -38,7 +25,7 @@
       Our
   </text>
 
-  <text x="165" y="50"
+  <text x="145" y="50"
         font-family="Poppins, Inter, sans-serif"
         font-size="38"
         font-weight="600"
@@ -46,5 +33,4 @@
         opacity="0.9">
       Needs
   </text>
-
 </svg>
