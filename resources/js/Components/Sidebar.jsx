@@ -73,8 +73,8 @@ export default function Sidebar() {
                     {user?.roles?.includes("teacher") && (
                         <>
                             <SidebarItem route={route('teacher.quizzes')} icon={ClipboardDocumentListIcon} text="Quizzes" />
-                            <SidebarItem route={route('teacher.quizzes')} icon={CalendarDaysIcon} text="Events" />
-                            <SidebarItem route={route('teacher.quizzes')} icon={UsersIcon} text="Manage Students" />
+                            <SidebarItem route={route('teacher.events')} icon={CalendarDaysIcon} text="Events" />
+                            <SidebarItem route={route('teacher.manageStudents')} icon={UsersIcon} text="Manage Students" />
                         </>
                     )}
                     {user?.roles?.includes("admin") && (

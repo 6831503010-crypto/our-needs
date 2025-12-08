@@ -15,17 +15,6 @@ Route::get('/', function () {
     ]);
 });
 
-// teacher area
-Route::middleware([
-    'auth',
-    'verified',
-    'role:teacher',
-])->prefix('teacher')->name('teacher.')->group(function () {
-    Route::get('/quizzes', function () {
-        return Inertia::render('Teacher/Quizzes/Index');
-    })->name('quizzes');
-});
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -49,3 +38,4 @@ Route::controller(EventResponseController::class)->group(function () {
 require __DIR__ . '/auth.php';
 require __DIR__ . '/student.php';
 require __DIR__ . '/admin.php';
+require __DIR__ . '/teacher.php';
