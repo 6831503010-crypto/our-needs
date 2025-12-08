@@ -94,7 +94,7 @@ export default function Sidebar() {
                     {user?.roles?.includes("teacher") && (
                         <>
                             <NavLink
-                                href="#"
+                                    href={route('teacher.quizzes')}
                                 className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
                             >
                                 <ClipboardDocumentListIcon className="w-5 h-5 text-indigo-600" />

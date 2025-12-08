@@ -58,6 +58,17 @@ Route::middleware([
     })->name('role-assignments.index');
 });
 
+// teacher area
+Route::middleware([
+    'auth',
+    'verified',
+    'role:teacher',
+])->prefix('teacher')->name('teacher.')->group(function () {
+    Route::get('/quizzes', function () {
+        return Inertia::render('Teacher/Quizzes/Index');
+    })->name('quizzes');
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
