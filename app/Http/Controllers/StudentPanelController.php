@@ -14,6 +14,6 @@ class StudentPanelController extends Controller
 
         $assigned = $student->subjectSections;
 
-        return Inertia::render('Student/Sections/Index', ['sections' => $assigned]);
+        return Inertia::render('Student/Courses/Index', ['sections' => $assigned]);
     }
 }

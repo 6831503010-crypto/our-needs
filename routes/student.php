@@ -11,5 +11,13 @@ Route::get('/users', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/student/sections', [StudentPanelController::class, 'assignedSections'])->name('student.sections');
+
+    Route::prefix('/student')->group(function () {
+
+        Route::get('/quizzes', [StudentPanelController::class, 'assignedSections'])->name('student.quizzes');
+
+        Route::get('/events', [StudentPanelController::class, 'assignedSections'])->name('student.events');
+
+        Route::get('/courses', [StudentPanelController::class, 'assignedSections'])->name('student.courses');
+    });
 });

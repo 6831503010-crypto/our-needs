@@ -58,7 +58,10 @@ export default function SidebarDropdown({
     children,
     isActiveGroup = false, // true if ANY child route is active
 }) {
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
+    // This resets the state every time the component re-renders
+    
+    const [open, setOpen] = useState(isActiveGroup);
 
     // ✅ If you navigate to a child route, auto-open the group
     useEffect(() => {

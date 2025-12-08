@@ -1,5 +1,5 @@
-import { Link, usePage } from '@inertiajs/react';
-import NavLink from '@/Components/NavLink';
+import { usePage } from '@inertiajs/react';
+
 import {
     ClipboardDocumentListIcon,
     CalendarDaysIcon,
@@ -11,7 +11,7 @@ import {
     ChartBarIcon,
 } from '@heroicons/react/24/outline';
 import SidebarDropdown from '@/Components/SidebarDropdown';
-
+import SidebarItem from '@/Components/SidebarItem';
 
 export default function Sidebar() {
     const user = usePage().props.auth.user;
@@ -65,122 +65,32 @@ export default function Sidebar() {
                 <div className="flex flex-col space-y-1 text-sm">
                     {user?.roles?.includes("student") && (
                         <>
-                            <NavLink
-                                href="#"
-                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                            >
-                                <ClipboardDocumentListIcon className="w-5 h-5 text-indigo-600" />
-                                Quizzes
-                            </NavLink>
-
-                            <NavLink
-                                href="#"
-                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                            >
-                                <CalendarDaysIcon className="w-5 h-5 text-indigo-600" />
-                                Events
-                            </NavLink>
-
-                            <NavLink
-                                href={route('student.sections')}
-                                active={route().current('student.sections')}
-                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                            >
-                                <NumberedListIcon className="w-5 h-5 text-indigo-600" />
-                                Courses
-                            </NavLink>
+                            <SidebarItem route={route('student.quizzes')} icon={ClipboardDocumentListIcon} text="Quizzes" />
+                            <SidebarItem route={route('student.events')} icon={CalendarDaysIcon} text="Events" />
+                            <SidebarItem route={route('student.courses')} icon={NumberedListIcon} text="Courses" />
                         </>
                     )}
                     {user?.roles?.includes("teacher") && (
                         <>
-                            <NavLink
-                                    href={route('teacher.quizzes')}
-                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                            >
-                                <ClipboardDocumentListIcon className="w-5 h-5 text-indigo-600" />
-                                Quizzes
-                            </NavLink>
-
-                            <NavLink
-                                href="#"
-                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                            >
-                                <CalendarDaysIcon className="w-5 h-5 text-indigo-600" />
-                                Events
-                            </NavLink>
-
-                            <NavLink
-                                href="#"
-                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                            >
-                                <UsersIcon className="w-5 h-5 text-indigo-600" />
-                                Manage Students
-                            </NavLink>
+                            <SidebarItem route={route('teacher.quizzes')} icon={ClipboardDocumentListIcon} text="Quizzes" />
+                            <SidebarItem route={route('teacher.quizzes')} icon={CalendarDaysIcon} text="Events" />
+                            <SidebarItem route={route('teacher.quizzes')} icon={UsersIcon} text="Manage Students" />
                         </>
                     )}
                     {user?.roles?.includes("admin") && (
                         <>
-                            <NavLink
-                                href={route('admin.analytics')}
-                                active={route().current('admin.analytics')}
-                                className="flex items-center gap-3 rounded-md px-3 py-2 text-black hover:bg-slate-100 transition"
-                            >
-                                <ChartBarIcon className="w-5 h-5 text-indigo-600" />
-                                Analytics
-                            </NavLink>
-
-                            <NavLink
-                                href={route('admin.students.index')}
-                                active={route().current('admin.students.index')}
-                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                            >
-                                <UsersIcon className="w-5 h-5 text-indigo-600" />
-                                Manage Students
-                            </NavLink>
-
-                            <NavLink
-                                href={route('admin.teachers.index')}
-                                active={route().current('admin.teachers.index')}
-                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                            >
-                                <AcademicCapIcon className="w-5 h-5 text-indigo-600" />
-                                Manage Teachers
-                            </NavLink>
-
-                            <NavLink
-                                href={route('admin.users.index')}
-                                active={route().current('admin.users.index')}
-                                className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100"
-                            >
-                                <UserGroupIcon className="w-5 h-5 text-indigo-600" />
-                                Manage Users
-                            </NavLink>
+                            <SidebarItem route={route('admin.analytics')} icon={ChartBarIcon} text="Analytics" />
+                            <SidebarItem route={route('admin.students.index')} icon={UsersIcon} text="Manage Students" />
+                            <SidebarItem route={route('admin.teachers.index')} icon={AcademicCapIcon} text="Manage Teachers" />
+                            <SidebarItem route={route('admin.users.index')} icon={UserGroupIcon} text="Manage Users" />
 
                             <SidebarDropdown
                                 label="Roles & Permissions" icon={ShieldCheckIcon} isActiveGroup={rolesGroupActive}>
-                                <NavLink
-                                    href={route('admin.roles.index')}
-                                    active={route().current('admin.roles.index')}
-                                    className="flex items-center gap-2 rounded-md px-3 py-1.5 text-gray-600 hover:text-gray-900 hover:bg-slate-50"
-                                >
-                                    Manage Roles
-                                </NavLink>
+                                <SidebarItem route={route('admin.roles.index')} icon={UserGroupIcon} text="Manage Roles" />
 
-                                <NavLink
-                                    href={route('admin.permissions.index')}
-                                    active={route().current('admin.permissions.index')}
-                                    className="flex items-center gap-2 rounded-md px-3 py-1.5 text-gray-600 hover:text-gray-900 hover:bg-slate-50"
-                                >
-                                    Manage Permissions
-                                </NavLink>
+                                <SidebarItem route={route('admin.permissions.index')} icon={UserGroupIcon} text="Manage Permissions" />
 
-                                <NavLink
-                                    href={route('admin.role-assignments.index')}
-                                    active={route().current('admin.role-assignments.index')}
-                                    className="flex items-center gap-2 rounded-md px-3 py-1.5 text-gray-600 hover:text-gray-900 hover:bg-slate-50"
-                                >
-                                    Assign Roles to Users
-                                </NavLink>
+                                <SidebarItem route={route('admin.role-assignments.index')} icon={UserGroupIcon} text="Assign Roles to Users" />
                             </SidebarDropdown>
                         </>
                     )}
