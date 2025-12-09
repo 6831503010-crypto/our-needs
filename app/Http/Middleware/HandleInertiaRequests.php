@@ -44,6 +44,25 @@ class HandleInertiaRequests extends Middleware
                         'roles' => $request->user()->getRoleNames(), // ["student", "teacher", ...]
                     ]
                     : null,
+
+                // --- Add This Section ---
+                'notifications' => fn() => $request->user()
+                    ? $request->user()
+                    ->unreadNotifications()
+                    ->latest()
+                    ->take(10)
+                    ->get()
+                    ->map(function ($n) {
+                        return [
+                            'id' => $n->id,
+                            'data' => $n->data,
+                            'created_at' => $n->created_at->diffForHumans(),
+                            'read_at' => $n->reat_at,
+                        ];
+                    }) : [],
+
+                'notificationCount' => fn() => $request->user()
+                    ? $request->user()->unreadNotifications()->count() : 0,
             ],
         ];
     }

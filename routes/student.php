@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\StudentPanelController;
 use App\Models\User;
+use App\Notifications\EventNotification;
 use Illuminate\Support\Facades\Route;
 
 // Testing
@@ -21,3 +22,19 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/courses', [StudentPanelController::class, 'assignedSections'])->name('student.courses');
     });
 });
+
+Route::get('/test-notify', function () {
+    // Send to the currently logged in user
+    request()->user()->notify(new EventNotification('Welcome to the system!', '/dashboard'));
+    return 'Notification sent!';
+});
+
+Route::post('/notifications/{id}/read', function ($id) {
+    $notification = request()->user()->unreadNotifications()->find($id);
+
+    if ($notification) {
+        $notification->markAsRead();
+    }
+
+    return back();
+})->middleware(['auth', 'verified'])->name('notifications.read');
