@@ -1,59 +1,205 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📚 OurNeeds — Student Activity & Quiz Tracking Platform
+
+> A modern Laravel + React app for managing quizzes, events, users, and roles.
+
+---
+
+## 🏷️ Stack & Status
+
+![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Inertia](https://img.shields.io/badge/Inertia.js-Enabled-9553E9?style=for-the-badge)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.x-38BDF8?style=for-the-badge&logo=tailwind-css)
+![Node](https://img.shields.io/badge/Node.js-20%2B-339933?style=for-the-badge&logo=node.js)
+![PHP](https://img.shields.io/badge/PHP-8.3-777BB4?style=for-the-badge&logo=php)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
+![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=for-the-badge)
+
+---
+
+## 🎬 UI Preview
+
+A quick look at the OurNeeds interface:
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="docs/preview.gif" width="900" alt="OurNeeds UI Preview">
 </p>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**OurNeeds** is a role-based platform built with **Laravel 12**, **Inertia.js**, and **React** to help schools and organizations manage:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- ✅ Quiz tracking  
+- ✅ Event reservations  
+- ✅ Google Forms integration  
+- ✅ Student & teacher dashboards  
+- ✅ Admin controls for roles & permissions  
 
-## Learning Laravel
+Each role (student, teacher, admin) gets a **tailored dashboard** with only what they need.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ✨ Core Features
 
-## Laravel Sponsors
+### 🎯 Smart Quiz Tracking  
+Keep quizzes organized with clear tracking for responses, completion status, and availability.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 📅 Event Reservations  
+Students can view upcoming events, reserve seats, and keep track of important dates.
 
-### Premium Partners
+### 🔄 Google Forms Sync  
+Import and update quizzes and events directly from Google Forms links.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 🔐 Role-Based Access  
+Built on **Spatie Roles & Permissions**, with three main roles:
 
-## Contributing
+- 🧑‍🎓 **Student**  
+- 🧑‍🏫 **Teacher**  
+- 🛡️ **Admin**  
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Each role sees different navigation, actions, and tools.
 
-## Code of Conduct
+### 📊 Real-Time Insights  
+Admins can see analytics on:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Quiz participation  
+- Event attendance  
+- Overall engagement
 
-## Security Vulnerabilities
+### 🌈 Beautiful UI  
+- Custom gradient icons  
+- Minimal, clean cards  
+- Floating sidebar with role-based options  
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🛠️ Tech Stack
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Layer     | Technology                       |
+|----------|-----------------------------------|
+| Backend  | Laravel 12                        |
+| Frontend | React + Inertia.js + Vite         |
+| Styling  | TailwindCSS                       |
+| Auth     | Laravel Breeze                    |
+| RBAC     | Spatie Roles & Permissions        |
+| Database | MySQL (Laragon or native)         |
+
+---
+
+## 📦 Installation
+
+Follow the steps below.  
+Commands are shown as if you’re running them in a terminal.
+
+### 1️⃣ Clone the repository
+
+- **What you do:** Download the project and `cd` into it.
+
+```bash
+git clone https://github.com/yourusername/ourneeds.git
+cd ourneeds
+```
+
+### 2️⃣ Install PHP dependencies
+
+-What you do: Install frontend + build tooling.
+
+```bash
+    composer install
+```
+
+3️⃣ Install Node dependencies
+
+-What you do: Install frontend + build tooling.
+```bash
+    npm install
+```
+
+4️⃣ Create and configure your `.env`
+
+-What you do: Copy the example config and adjust it.
+```bash
+    cp .env.example .env
+```
+
+Update these fields inside `.env`:
+-`APP_URL`
+-`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`
+-Mail settings (optional for now)
+
+5️⃣ Generate the application key
+
+-What you do: Let Laravel generate a unique app key.
+```bash
+    php artisan key:generate
+```
+
+6️⃣ Run migrations & seeders
+
+-What you do: Create the database tables and seed roles/users.
+```bash
+    php artisan migrate --seed
+```
+This will create:
+-Default roles: `student`, `teacher`, `admin`
+-Default permissions
+-Default admin users: Kenny, Vinny, Rex, Saw Keh
+-All seeded users share the password: `Password`
+
+7️⃣ Start the dev servers
+
+-What you do: Run Vite + Laravel side by side.
+```bash
+    npm run dev
+    php artisan serve
+```
+Open the app in your browser:
+`http://localhost:8000`
+
+🗂️ Project Structure (High Level)
+```bash
+    app/
+      Http/
+        Controllers/
+        Middleware/
+      Models/
+    resources/
+      js/
+        Pages/
+        Components/
+        Layouts/
+      views/
+    routes/
+      web.php
+    database/
+      migrations/
+      seeders/
+```
+🔒 Roles & Permissions
+
+Roles are powered by Spatie Roles & Permissions:
+```bash
+    student
+    teacher
+    admin
+```
+Typical permissions include:
+```bash
+    view quizzes
+    manage quizzes
+    view events
+    manage events
+    manage users
+    assign roles
+```
+Permissions and roles are seeded and exposed to the frontend through Inertia props.
+
+🤝 Contributing
+
+Pull requests are welcome 💜  
+`Fork the repo  
+  Create a feature branch  
+  Commit and push  
+  Open a PR and describe your changes`
