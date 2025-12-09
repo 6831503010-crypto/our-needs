@@ -22,7 +22,7 @@
 A quick look at the OurNeeds interface:
 
 <p align="center">
-  <img src="docs/preview.gif" width="900" alt="OurNeeds UI Preview">
+  <img src="public/preview.gif" width="900" alt="OurNeeds UI Preview">
 </p>
 
 ---
