@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
+use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\EventResponseController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuizAttemptController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
@@ -24,4 +25,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::controller(QuizAttemptController::class)->group(function () {
+    Route::get('/quiz-attempts', 'show');
+});
+
+Route::controller(EventResponseController::class)->group(function () {
+    Route::get('/events', 'show');
+});
+
+
+
+require __DIR__ . '/auth.php';
+require __DIR__ . '/student.php';
+require __DIR__ . '/admin.php';
+require __DIR__ . '/teacher.php';

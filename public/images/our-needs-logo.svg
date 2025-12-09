@@ -1,0 +1,36 @@
+<svg width="280" height="90" viewBox="0 0 280 90" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Gradient -->
+  <defs>
+    <linearGradient id="on-grad" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1" />
+      <stop offset="100%" stop-color="#A855F7" />
+    </linearGradient>
+  </defs>
+
+  <!-- Backpack Mascot -->
+  <g transform="translate(18, 12) scale(2.2)">
+    <rect x="5" y="8" width="14" height="12" rx="4" fill="none" stroke="url(#on-grad)" stroke-width="1.6"/>
+    <path d="M9 8a3 3 0 016 0" stroke="url(#on-grad)" fill="none" stroke-linecap="round" stroke-width="1.6"/>
+    <circle cx="9" cy="12" r="1.2" fill="url(#on-grad)"/>
+    <circle cx="15" cy="12" r="1.2" fill="url(#on-grad)"/>
+  </g>
+
+  <!-- Wordmark: OUR NEEDS -->
+  <text x="70" y="50"
+        font-family="Poppins, Inter, sans-serif"
+        font-size="38"
+        font-weight="700"
+        fill="url(#on-grad)">
+      Our
+  </text>
+
+  <text x="145" y="50"
+        font-family="Poppins, Inter, sans-serif"
+        font-size="38"
+        font-weight="600"
+        fill="url(#on-grad)"
+        opacity="0.9">
+      Needs
+  </text>
+</svg>

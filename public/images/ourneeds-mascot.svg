@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="ourNeedsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Backpack group -->
+  <g transform="translate(24,18)">
+    <!-- Body -->
+    <rect x="10" y="16" width="56" height="44" rx="12" fill="url(#ourNeedsGrad)"/>
+
+    <!-- Pocket -->
+    <rect x="20" y="34" width="36" height="18" rx="6" fill="rgba(0,0,0,0.2)"/>
+
+    <!-- Flap -->
+    <rect x="14" y="14" width="48" height="16" rx="8" fill="rgba(0,0,0,0.5)"/>
+
+    <!-- Handle -->
+    <path d="M28 18 Q38 6 48 18" stroke="#e5e7eb" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+    <!-- Straps -->
+    <path d="M16 24 L10 40" stroke="#4f46e5" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+    <path d="M60 24 L66 40" stroke="#7c3aed" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+
+    <!-- Smiling Eyes (^ ^) in BLACK -->
+    <path d="M24 32 L28 30 L32 32" stroke="#0f172a" stroke-width="2.3" stroke-linecap="round" fill="none"/>
+    <path d="M44 32 L48 30 L52 32" stroke="#0f172a" stroke-width="2.3" stroke-linecap="round" fill="none"/>
+
+    <!-- Blush -->
+    <circle cx="22" cy="38" r="2.4" fill="#fb7185" opacity="0.85"/>
+    <circle cx="54" cy="38" r="2.4" fill="#fb7185" opacity="0.85"/>
+
+    <!-- Smile -->
+    <path d="M30 44 Q38 48 46 44" stroke="#0f172a" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>
