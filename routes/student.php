@@ -15,11 +15,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/student')->group(function () {
 
-        Route::get('/quizzes', [StudentPanelController::class, 'assignedSections'])->name('student.quizzes');
+        Route::get('/quizzes', [StudentPanelController::class, 'quizzes'])->name('student.quizzes');
+        Route::get('/quizzes/{id}', [StudentPanelController::class, 'quizShow'])->name('student.quizzes.show');
+        Route::get('/quizzes/{id}/result', [StudentPanelController::class, 'quizResult'])->name('student.quizzes.result');
 
-        Route::get('/events', [StudentPanelController::class, 'assignedSections'])->name('student.events');
+        Route::get('/events', [StudentPanelController::class, 'events'])->name('student.events');
+        Route::get('/events/{id}', [StudentPanelController::class, 'eventShow'])->name('student.events.show');
 
-        Route::get('/courses', [StudentPanelController::class, 'assignedSections'])->name('student.courses');
+        Route::get('/courses', [StudentPanelController::class, 'sections'])->name('student.courses');
     });
 });
 
