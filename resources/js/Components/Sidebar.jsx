@@ -9,6 +9,9 @@ import {
     UserGroupIcon,
     ShieldCheckIcon,
     ChartBarIcon,
+    UserCircleIcon,
+    KeyIcon,
+    UserPlusIcon,
 } from '@heroicons/react/24/outline';
 import SidebarDropdown from '@/Components/SidebarDropdown';
 import SidebarItem from '@/Components/SidebarItem';
@@ -205,21 +208,21 @@ export default function Sidebar() {
                             <SidebarItem
                                 href={route('admin.roles.index')}
                                 routeName="admin.roles.index"
-                                icon={UserGroupIcon}
+                                icon={UserCircleIcon}
                                 text="Manage Roles"
                             />
 
                             <SidebarItem
                                 href={route('admin.permissions.index')}
                                 routeName="admin.permissions.index"
-                                icon={UserGroupIcon}
+                                icon={KeyIcon}
                                 text="Manage Permissions"
                             />
 
                             <SidebarItem
                                 href={route('admin.role-assignments.index')}
                                 routeName="admin.role-assignments.index"
-                                icon={UserGroupIcon}
+                                icon={UserPlusIcon}
                                 text="Assign Roles to Users"
                             />
                         </SidebarDropdown>
