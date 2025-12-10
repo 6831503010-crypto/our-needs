@@ -1,48 +1,53 @@
 <?php
 
-use App\Models\User;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
-// Admin area
+// Controllers
+use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleAssignmentController;
+use App\Http\Controllers\Admin\UserController;
+
 Route::middleware([
     'auth',
     'verified',
     'role:admin',
 ])->prefix('admin')->name('admin.')->group(function () {
 
-    // Analytics
-    Route::get('/analytics', function () {
-        return Inertia::render('Admin/Analytics');
-    })->name('analytics');
+    /**
+     * 📊 Analytics Dashboard
+     */
+    Route::get(
+        '/analytics',
+        fn() =>
+        Inertia::render('Admin/Analytics')
+    )->name('analytics');
 
-    // Manage Students
-    Route::get('/students', function () {
-        return Inertia::render('Admin/Students/Index');
-    })->name('students.index');
+    //Students CRUD
+    Route::resource('students', StudentController::class);
 
-    // Manage Teachers
-    Route::get('/teachers', function () {
-        return Inertia::render('Admin/Teachers/Index');
-    })->name('teachers.index');
+    //Teachers CRUD
+    Route::resource('teachers', TeacherController::class);
 
-    // Manage Users
-    Route::get('/users', function () {
-        return Inertia::render('Admin/Users/Index');
-    })->name('users.index');
+    //Users CRUD
+    Route::resource('users', UserController::class);
 
-    // Manage Roles
-    Route::get('/roles', function () {
-        return Inertia::render('Admin/Roles/Index');
-    })->name('roles.index');
+    //Roles CRUD
+    Route::resource('roles', RoleController::class);
 
-    // Manage Permissions
-    Route::get('/permissions', function () {
-        return Inertia::render('Admin/Permissions/Index');
-    })->name('permissions.index');
+    //Permissions CRUD
+    Route::resource('permissions', PermissionController::class);
 
-    // Assign Roles to Users
-    Route::get('/role-assignments', function () {
-        return Inertia::render('Admin/RoleAssignments/Index');
-    })->name('role-assignments.index');
+    //Role Assignments
+    Route::get('/role-assignments', [RoleAssignmentController::class, 'index'])
+        ->name('role-assignments.index');
+
+    Route::post('/role-assignments/{user}/assign', [RoleAssignmentController::class, 'assign'])
+        ->name('role-assignments.assign');
+
+    Route::post('/role-assignments/{user}/remove', [RoleAssignmentController::class, 'remove'])
+        ->name('role-assignments.remove');
 });

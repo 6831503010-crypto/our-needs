@@ -1,7 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
-export default function StudentsIndex({ auth, students = [] }) {
+export default function StudentsIndex({ auth, students }) {
+    const rows = students?.data || [];
+
     return (
         <AuthenticatedLayout
             header={
@@ -35,7 +37,7 @@ export default function StudentsIndex({ auth, students = [] }) {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
-                                    {students.length === 0 && (
+                                    {rows.length === 0 && (
                                         <tr>
                                             <td
                                                 colSpan="3"
@@ -45,7 +47,8 @@ export default function StudentsIndex({ auth, students = [] }) {
                                             </td>
                                         </tr>
                                     )}
-                                    {students.map((student) => (
+
+                                    {rows.map((student) => (
                                         <tr key={student.id}>
                                             <td className="px-4 py-2">
                                                 {student.name}
@@ -62,6 +65,30 @@ export default function StudentsIndex({ auth, students = [] }) {
                                     ))}
                                 </tbody>
                             </table>
+
+                            {/* Pagination */}
+                            {students.links && (
+                                <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
+                                    <div className="text-xs text-gray-500">
+                                        Page {students.current_page} of {students.last_page}
+                                    </div>
+
+                                    <div className="flex flex-wrap gap-1">
+                                        {students.links.map((link, i) => (
+                                            <Link
+                                                key={i}
+                                                href={link.url || '#'}
+                                                preserveScroll
+                                                className={`rounded-md px-3 py-1 text-xs
+                                                    ${link.url ? 'hover:bg-gray-100' : 'text-gray-400 cursor-default'}
+                                                    ${link.active ? 'bg-indigo-600 text-white hover:bg-indigo-600' : 'text-gray-700'}
+                                                `}
+                                                dangerouslySetInnerHTML={{ __html: link.label }}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use App\Http\Controllers\EventResponseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuizAttemptController;
@@ -15,8 +16,24 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+Route::get('/dashboard', function (Request $request) {
+    $user = $request->user();
+
+    // priority: admin > teacher > student (you can change this order)
+    if ($user->hasRole('admin')) {
+        return redirect()->route('admin.analytics');
+    }
+
+    if ($user->hasRole('teacher')) {
+        return redirect()->route('teacher.quizzes');
+    }
+
+    if ($user->hasRole('student')) {
+        return redirect()->route('student.quizzes');
+    }
+
+    // fallback if somehow no role
+    return redirect()->route('login');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

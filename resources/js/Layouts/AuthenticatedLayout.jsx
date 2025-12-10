@@ -418,10 +418,11 @@ export default function AuthenticatedLayout({ header, children }) {
             </nav>
 
             {/* MAIN AREA: sidebar + page content */}
-            <div className="flex flex-1">
+            <div className="flex flex-1 min-h-[calc(100vh-4rem)]">
                 <Sidebar />
 
-                <div className="flex-1 ml-64 px-8 pt-6">
+                {/* no ml-64 now */}
+                <div className="flex-1 px-8 pt-6">
                     {header && (
                         <header className="bg-white shadow rounded-xl mb-4">
                             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -433,6 +434,7 @@ export default function AuthenticatedLayout({ header, children }) {
                     <main>{children}</main>
                 </div>
             </div>
+
 
             {/* <div className="flex flex-1">
                 <Sidebar />
