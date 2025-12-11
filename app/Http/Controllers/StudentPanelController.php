@@ -65,7 +65,7 @@ class StudentPanelController extends Controller
     public function eventShow($id)
     {
         // Placeholder for now, eventually will fetch Event::findOrFail($id)
-        return Inertia::render('Student/Events/Show', ['id' => $id]);
+        return Inertia::render('Student/Events/Show/Index', ['id' => $id]);
     }
 
     public function quizzes()
@@ -75,6 +75,7 @@ class StudentPanelController extends Controller
 
         if (!$student) {
             $emptyPaginator = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 10);
+            
              return Inertia::render('Student/Quizzes/Index', [
                 'availableQuizzes' => $emptyPaginator,
                 'takenQuizzes' => $emptyPaginator
