@@ -6,7 +6,7 @@ export default function QuizzesIndex({ auth, takenQuizzes, availableQuizzes }) {
     // Fallback for props
     const taken = takenQuizzes || { data: [], links: [] };
     const available = availableQuizzes || { data: [], links: [] };
-
+    
     return (
         <AuthenticatedLayout
             header={

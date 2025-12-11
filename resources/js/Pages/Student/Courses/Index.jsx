@@ -6,11 +6,11 @@ export default function CoursesIndex({ auth, sections = [] }) {
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    My Courses
+                    Courses
                 </h2>
             }
         >
-            <Head title="My Courses" />
+            <Head title="Courses" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">

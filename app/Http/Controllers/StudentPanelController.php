@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Quiz;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,37 +39,28 @@ class StudentPanelController extends Controller
     public function events()
     {
         $user = Auth::user();
-        $student = $user->student;
 
-        if (!$student) {
-            $emptyPaginator = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 10);
-            return Inertia::render('Student/Events/Index', [
-                'registeredEvents' => $emptyPaginator,
-                'upcomingEvents' => $emptyPaginator
-            ]);
-        }
+        // All event IDs the student has registered
+        $eventIds = $user->eventReservations->pluck('event_id');
 
-        // Registered: Events where student has a reservation
-        $registeredEvents = Event::whereHas('reservations', function ($q) use ($student) {
-            $q->where('student_id', $student->id);
-        })
-        ->orderBy('starts_at', 'asc')
-        ->paginate(10, ['*'], 'registered_page');
+        // Registered events
+        $registeredEvents = Event::whereIn('id', $eventIds)
+            ->orderBy('starts_at')
+            ->paginate(10, ['*'], 'registered_page');
 
-        // Upcoming: Published events where student does NOT have a reservation, starting in future
-        $upcomingEvents = Event::whereDoesntHave('reservations', function ($q) use ($student) {
-            $q->where('student_id', $student->id);
-        })
-        ->where('is_published', true)
-        ->where('starts_at', '>=', now())
-        ->orderBy('starts_at', 'asc')
-        ->paginate(10, ['*'], 'upcoming_page');
+        // Upcoming events the student has not registered
+        $upcomingEvents = Event::whereNotIn('id', $eventIds)
+            ->where('is_published', true)
+            ->where('starts_at', '>=', now())
+            ->orderBy('starts_at')
+            ->paginate(10, ['*'], 'upcoming_page');
 
         return Inertia::render('Student/Events/Index', [
             'registeredEvents' => $registeredEvents,
-            'upcomingEvents' => $upcomingEvents
+            'upcomingEvents' => $upcomingEvents,
         ]);
     }
+
 
     public function eventShow($id)
     {
