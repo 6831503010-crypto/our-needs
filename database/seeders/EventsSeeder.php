@@ -71,7 +71,7 @@ class EventsSeeder extends Seeder
             $student4 = User::role('student')->first();
         }
 
-        if ($student1 && count($createdEvents) > 1) {
+        if (($student1 && $student2 && $student3 && $student4) && count($createdEvents) > 1) {
             $registeredEvents = [
                 [
                     'event_id' => $createdEvents[0]->id,
