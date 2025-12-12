@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('teacher_id')
-                ->constrained('users')
+                ->constrained('teachers')
                 ->cascadeOnDelete(); // must be a teacher
 
             $table->string('title');

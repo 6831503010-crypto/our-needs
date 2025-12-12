@@ -7,7 +7,7 @@ import {
     ClockIcon
 } from '@heroicons/react/24/outline';
 
-export default function Analytics({ auth }) {
+export default function TeacherQuizzIndex({ auth }) {
     return (
         <AuthenticatedLayout
             header={
@@ -21,13 +21,15 @@ export default function Analytics({ auth }) {
             <div className="">
                 <div className="mx-auto max-w-7xl space-y-4">
                     <div className="overflow-hidden rounded-lgshadow">
-                        <div className="p-6">
+
+                        {/* quizz area  */}
+                        <div className="py-6 bg-red-300">
                             <p className="text-gray-700 mb-8">
                                 Teacher Quizz area
                             </p>
 
                             {/* quizz card  */}
-                            <div className="px-8 py-5 bg-white rounded-md flex justify-between items-start">
+                            <div className="mx-3 px-8 py-5 bg-white rounded-md flex justify-between items-start">
                                 <div className="flex flex-col gap-5">
                                     <h3>Quizz name</h3>
                                     <div className="flex text-sm text-slate-600 gap-2 items-center">

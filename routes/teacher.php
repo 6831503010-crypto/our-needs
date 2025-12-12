@@ -4,7 +4,6 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentPanelController;
 
-// teacher area
 Route::middleware([
     'auth',
     'verified',

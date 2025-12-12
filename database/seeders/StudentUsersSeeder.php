@@ -3,9 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+
+use function Termwind\render;
 
 class StudentUsersSeeder extends Seeder
 {
@@ -14,6 +17,7 @@ class StudentUsersSeeder extends Seeder
      */
     public function run(): void
     {
+        $majors = ["Computer Science", "Business Administration", "Psychology", "Engineering", "Biology", "Economics"];
         $studentRole = Role::firstOrCreate(['name' => 'student']);
         $students = [
             [
@@ -42,6 +46,14 @@ class StudentUsersSeeder extends Seeder
                     'password' => Hash::make('Password')
                 ]
             );
+
+            // Create Student Profile
+            \App\Models\Student::firstOrCreate([
+                'user_id' => $student->id,
+                'student_id' => 'STU' . str_pad($student->id, 4, '0', STR_PAD_LEFT),
+                'major' => $majors[array_rand($majors)],
+                'year' => rand(1, 4),
+            ]);
 
             if (!$student->hasRole('student')) {
                 $student->assignRole('student');

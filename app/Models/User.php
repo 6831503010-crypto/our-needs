@@ -62,10 +62,10 @@ class User extends Authenticatable
     }
 
     // === Teaching / managing ===
-    public function quizzesTeaching()
-    {
-        return $this->hasMany(Quiz::class, 'teacher_id');
-    }
+    // public function quizzesTeaching()
+    // {
+    //     return $this->hasMany(Quiz::class, 'teacher_id');
+    // }
 
     public function eventsCreated()
     {
