@@ -28,6 +28,9 @@ export default function Sidebar() {
         <aside
             className="
                 w-64
+                shrink-0
+                h-full
+                overflow-y-auto
                 flex flex-col
                 backdrop-blur-lg bg-white/90
                 text-gray-900
@@ -36,7 +39,7 @@ export default function Sidebar() {
             "
         >
             {/* STACKED MENU */}
-            <nav className="flex-1 overflow-y-auto px-2 py-3">
+            <nav className="flex-1 px-2 py-3">
                 <div className="flex flex-col space-y-1 text-sm">
                     {user?.roles?.includes('student') && (
                         // <>
@@ -171,7 +174,7 @@ export default function Sidebar() {
                         //         />
                         //     </SidebarDropdown>
                         // </>
-                        <>
+                    <>
                         <SidebarItem
                             href={route('admin.analytics')}
                             routeName="admin.analytics"
@@ -225,7 +228,7 @@ export default function Sidebar() {
                                 icon={UserPlusIcon}
                                 text="Assign Roles to Users"
                             />
-                        </SidebarDropdown>
+                            </SidebarDropdown>
                     </>
                     )}
                 </div>
