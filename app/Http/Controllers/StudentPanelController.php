@@ -15,26 +15,36 @@ class StudentPanelController extends Controller
         $student = $user->student;
 
         if (!$student) {
-            return Inertia::render('Student/Courses/Index', ['sections' => []]);
+            return Inertia::render('Student/Courses/Index', [
+                'sections' => []
+            ]);
         }
 
-        $sections = $student->subjectSections()
-            ->with(['subject', 'teacher.user'])
+        $sections = $student->sections()
+            ->with(['subject', 'teacher'])
             ->get()
             ->map(function ($section) {
-                // Flatten teacher name for the frontend which expects section.teacher.name
-                if ($section->teacher && $section->teacher->user) {
-                    $section->setRelation('teacher', [
-                        'name' => $section->teacher->user->name,
-                        // Include other fields if needed, but name is main one used
-                        'id' => $section->teacher->id
-                    ]);
-                }
-                return $section;
-            });
+                return [
+                    'id' => $section->id,
+                    'number' => $section->number,
+                    'schedule' => $section->schedule,
 
-        return Inertia::render('Student/Courses/Index', ['sections' => $sections]);
+                    'subject' => [
+                        'id' => $section->subject->id,
+                        'name' => $section->subject->name,
+                    ],
+
+                    'teacher' => $section->teacher ? [
+                        'id' => $section->teacher->id,
+                        'name' => $section->teacher->name,
+                    ] : null,
+                ];
+            });
+        return Inertia::render('Student/Courses/Index', [
+            'sections' => $sections
+        ]);
     }
+
 
     public function events()
     {
@@ -67,7 +77,6 @@ class StudentPanelController extends Controller
         // Placeholder for now, eventually will fetch Event::findOrFail($id)
         return Inertia::render('Student/Events/Show/Index', ['id' => $id]);
     }
-
     public function quizzes()
     {
         $user = Auth::user();
@@ -75,8 +84,8 @@ class StudentPanelController extends Controller
 
         if (!$student) {
             $emptyPaginator = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 10);
-            
-             return Inertia::render('Student/Quizzes/Index', [
+
+            return Inertia::render('Student/Quizzes/Index', [
                 'availableQuizzes' => $emptyPaginator,
                 'takenQuizzes' => $emptyPaginator
             ]);
@@ -86,20 +95,20 @@ class StudentPanelController extends Controller
         $availableQuizzes = Quiz::whereDoesntHave('attempts', function ($q) use ($student) {
             $q->where('student_id', $student->id);
         })
-        ->where('is_published', true)
-        ->orderBy('open_at', 'asc')
-        ->paginate(10, ['*'], 'available_page');
+            ->where('is_published', true)
+            ->orderBy('open_at', 'asc')
+            ->paginate(10, ['*'], 'available_page');
 
         // Taken: Quizzes where student has attempts
         $takenQuizzes = Quiz::whereHas('attempts', function ($q) use ($student) {
             $q->where('student_id', $student->id);
         })
-        ->with(['attempts' => function ($q) use ($student) {
-            // Load attempts for this student to get score
-            $q->where('student_id', $student->id)->latest();
-        }])
-        ->orderBy('created_at', 'desc') // Or ordered by attempt date
-        ->paginate(10, ['*'], 'taken_page');
+            ->with(['attempts' => function ($q) use ($student) {
+                // Load attempts for this student to get score
+                $q->where('student_id', $student->id)->latest();
+            }])
+            ->orderBy('created_at', 'desc') // Or ordered by attempt date
+            ->paginate(10, ['*'], 'taken_page');
 
         // Transform collection to match frontend expectations (quiz.pivot.score)
         $takenQuizzes->getCollection()->transform(function ($quiz) {
@@ -123,6 +132,6 @@ class StudentPanelController extends Controller
 
     public function quizResult($id)
     {
-         return Inertia::render('Student/Quizzes/Result', ['id' => $id]);
+        return Inertia::render('Student/Quizzes/Result', ['id' => $id]);
     }
 }

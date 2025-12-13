@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\StudentPanelController;
-use App\Notifications\EventNotification;
+use App\Models\User;
+use App\Models\Section;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
+use App\Notifications\EventNotification;
+use App\Http\Controllers\StudentPanelController;
 
 Route::middleware(['auth'])->group(function () {
 
@@ -23,6 +26,16 @@ Route::get('/test-notify', function () {
     // Send to the currently logged in user
     request()->user()->notify(new EventNotification('Welcome to the system!', '/dashboard'));
     return 'Notification sent!';
+});
+
+Route::get('/users', function () {
+    $users = User::all();
+    return response()->json([$users]);
+});
+
+Route::get('/sections', function () {
+    $teachers = Section::all();
+    return response()->json($teachers);
 });
 
 Route::post('/notifications/{id}/read', function ($id) {

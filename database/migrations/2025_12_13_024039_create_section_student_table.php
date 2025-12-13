@@ -9,18 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-
     public function up(): void
     {
-        Schema::create('sections', function (Blueprint $table) {
+        Schema::create('section_student', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('number');
-            $table->foreignId('subject_id')->constrained()->onDelete('cascade');
-            $table->foreignId('teacher_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->string('schedule')->nullable();
+            $table->foreignId('student_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('section_id')->constrained()->cascadeOnDelete();
 
             $table->timestamps();
+
+            // Prevention of duplicate values
+            $table->unique(['student_id', 'section_id']);
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists('section_student');
     }
 };

@@ -10,7 +10,13 @@ class Section extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['subject_id', 'name', 'teacher_id', 'schedule'];
+    protected $fillable = [
+        'number',
+        'subject_id',
+        'teacher_id',
+        'schedule',
+    ];
+
 
     public function subject()
     {
@@ -19,11 +25,11 @@ class Section extends Model
 
     public function teacher()
     {
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsTo(User::class, 'teacher_id');
     }
 
     public function students()
     {
-        return $this->belongsToMany(Student::class, 'student_subject_sections', 'section_id', 'student_id')->withPivot('subject_id');
+        return $this->belongsToMany(Student::class);
     }
 }

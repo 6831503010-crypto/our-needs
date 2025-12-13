@@ -68,9 +68,13 @@ function CourseCard({ section }) {
                     {section.subject?.name || 'Untitled Course'}
                 </h3>
 
-                <p className="text-sm font-medium text-gray-500 mb-4">
-                    {section.name || 'No Section Name'}
-                </p>
+                {section.number && (
+                    <div className="mb-4">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded text-sm font-medium bg-gray-100 text-gray-700">
+                            Section {section.number}
+                        </span>
+                    </div>
+                )}
 
                 <div className="mt-4 flex items-center text-sm text-gray-600">
                     <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-xs text-gray-500 mr-2">
