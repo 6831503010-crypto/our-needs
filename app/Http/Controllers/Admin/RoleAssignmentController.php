@@ -41,6 +41,51 @@ class RoleAssignmentController extends Controller
         return back()->with('success', 'Role assigned.');
     }
 
+    public function edit(User $user)
+    {
+        $user->load('roles:id,name');
+
+        $roles = Role::query()
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get();
+
+        return Inertia::render('Admin/RoleAssignments/Edit', [
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'roles' => $user->roles->pluck('name')->values(), // ["admin", "teacher"]
+            ],
+            'roles' => $roles->map(fn($r) => [
+                'id' => $r->id,
+                'name' => $r->name,
+            ]),
+        ]);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $data = $request->validate([
+            'roles' => ['array'],
+            'roles.*' => ['string', 'exists:roles,name'],
+        ]);
+
+        // optional safety: don't let admin remove their own admin role
+        if (
+            $request->user()?->id
+            === $user->id && isset($data['roles']) && !in_array('admin', $data['roles'])
+        ) {
+            return back()->with('error', 'You cannot remove your own admin role.');
+        }
+
+        $user->syncRoles($data['roles'] ?? []);
+
+        return redirect()
+            ->route('admin.role-assignments.index')
+            ->with('success', 'Roles updated successfully.');
+    }
+
     public function destroy(User $user, Role $role)
     {
         $user->removeRole($role->name);

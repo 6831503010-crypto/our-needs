@@ -1,5 +1,11 @@
+import EditButton from '@/Components/EditButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head,Link } from '@inertiajs/react';
+import { Head,Link,usePage } from '@inertiajs/react';
+import { useState } from 'react';
+import { XMarkIcon } from '@heroicons/react/24/solid';
+import AddButton from '@/Components/AddButton';
+import DeleteButton from '@/Components/DeleteButton';
+import Pagination from '@/Components/Pagination';
 
 function groupPermissions(permissions = []) {
     const groups = {
@@ -27,6 +33,9 @@ function groupPermissions(permissions = []) {
 
 export default function RolesIndex({ auth, roles = [] }) {
     const rows = roles?.data || [];
+    const { flash } = usePage().props;
+    const [showFlash, setShowFlash] = useState(true);
+
     return (
         <AuthenticatedLayout
             header={
@@ -41,9 +50,28 @@ export default function RolesIndex({ auth, roles = [] }) {
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden rounded-lg bg-white shadow">
                         <div className="p-6">
-                            <p className="mb-4 text-gray-700">
-                                Here you can create, edit, and delete roles.
-                            </p>
+                            {/* Flash Messages */}
+                            {flash?.success && showFlash && (
+                                <div className="mb-4 flex items-start justify-between gap-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                                    <span>{flash.success}</span>
+
+                                    <button
+                                        onClick={() => setShowFlash(false)}
+                                        className="text-emerald-600 hover:text-emerald-800 transition"
+                                        aria-label="Dismiss"
+                                    >
+                                        <XMarkIcon className="h-5 w-5" />
+                                    </button>
+                                </div>
+                            )}
+
+                             <div className="mb-4 flex items-center justify-between">
+                                <p className="text-gray-700">
+                                    Here you can create, edit, and delete roles.
+                                </p>
+
+                                <AddButton href={route("admin.roles.create")} label="Add new role"/>
+                            </div>
 
                             <table className="min-w-full divide-y divide-gray-200 text-sm">
                                 <thead className="bg-gray-50">
@@ -111,9 +139,11 @@ export default function RolesIndex({ auth, roles = [] }) {
                                             </td>
 
                                             <td className="px-4 py-2 text-sm text-indigo-600">
-                                                <button className="hover:underline">
-                                                    Edit
-                                                </button>
+                                                <div className="flex items-center gap-4 text-sm">
+                                                    <EditButton href={route("admin.roles.edit",role.id)} label={"Edit"}/>
+                                                    <DeleteButton href={route("admin.roles.destroy", role.id)} label={"Delete"}
+                                                        confirmMessage={`Delete role "${role.name}"?`} />
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}
@@ -125,21 +155,7 @@ export default function RolesIndex({ auth, roles = [] }) {
                                     <div className="text-xs text-gray-500">
                                         Page {roles.current_page} of {roles.last_page}
                                     </div>
-
-                                    <div className="flex flex-wrap gap-1">
-                                        {roles.links.map((link, i) => (
-                                            <Link
-                                                key={i}
-                                                href={link.url || '#'}
-                                                preserveScroll
-                                                className={`rounded-md px-3 py-1 text-xs
-                                                    ${link.url ? 'hover:bg-gray-100' : 'text-gray-400 cursor-default'}
-                                                    ${link.active ? 'bg-indigo-600 text-white hover:bg-indigo-600' : 'text-gray-700'}
-                                                `}
-                                                dangerouslySetInnerHTML={{ __html: link.label }}
-                                            />
-                                        ))}
-                                    </div>
+                                    <Pagination links={roles.links}/>
                                 </div>
                             )}
                         </div>

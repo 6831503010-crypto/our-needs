@@ -1,8 +1,14 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head,Link } from '@inertiajs/react';
+import { FingerPrintIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { Head, Link,usePage } from '@inertiajs/react';
+import { useState } from 'react';
+import Pagination from '@/Components/Pagination';
 
 export default function RoleAssignmentsIndex({ auth, users = [], roles = [] }) {
     const rows = users?.data || [];
+    const { flash } = usePage().props;
+    const [showFlash, setShowFlash] = useState(true);
+
     return (
         <AuthenticatedLayout
             header={
@@ -20,6 +26,21 @@ export default function RoleAssignmentsIndex({ auth, users = [], roles = [] }) {
                             <p className="text-gray-700">
                                 Here you can assign roles to users. Later you can turn this into a proper form.
                             </p>
+
+                            {/* Flash Messages */}
+                            {flash?.success && showFlash && (
+                                <div className="mb-4 flex items-start justify-between gap-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                                    <span>{flash.success}</span>
+
+                                    <button
+                                        onClick={() => setShowFlash(false)}
+                                        className="text-emerald-600 hover:text-emerald-800 transition"
+                                        aria-label="Dismiss"
+                                    >
+                                        <XMarkIcon className="h-5 w-5" />
+                                    </button>
+                                </div>
+                            )}
 
                             <table className="min-w-full divide-y divide-gray-200 text-sm">
                                 <thead className="bg-gray-50">
@@ -61,9 +82,17 @@ export default function RoleAssignmentsIndex({ auth, users = [], roles = [] }) {
                                                 {(user.roles || []).join(', ')}
                                             </td>
                                             <td className="px-4 py-2 text-sm text-indigo-600">
-                                                <button className="hover:underline">
-                                                    Edit Roles
-                                                </button>
+                                                <Link
+                                                    href={route('admin.role-assignments.edit', user.id)}
+                                                    className={
+                                                        `text-indigo-600
+                                                        hover:text-indigo-800
+                                                        hover:underline
+                                                        font-medium`}
+                                                >
+                                                    <FingerPrintIcon className="inline h-4 w-4 mr-1" />
+                                                    Assign Roles
+                                                </Link>
                                             </td>
                                         </tr>
                                     ))}
@@ -75,21 +104,7 @@ export default function RoleAssignmentsIndex({ auth, users = [], roles = [] }) {
                                     <div className="text-xs text-gray-500">
                                         Page {users.current_page} of {users.last_page}
                                     </div>
-
-                                    <div className="flex flex-wrap gap-1">
-                                        {users.links.map((link, i) => (
-                                            <Link
-                                                key={i}
-                                                href={link.url || '#'}
-                                                preserveScroll
-                                                className={`rounded-md px-3 py-1 text-xs
-                                                    ${link.url ? 'hover:bg-gray-100' : 'text-gray-400 cursor-default'}
-                                                    ${link.active ? 'bg-indigo-600 text-white hover:bg-indigo-600' : 'text-gray-700'}
-                                                `}
-                                                dangerouslySetInnerHTML={{ __html: link.label }}
-                                            />
-                                        ))}
-                                    </div>
+                                    <Pagination links={users.links}/>
                                 </div>
                             )}
                         </div>

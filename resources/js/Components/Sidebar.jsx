@@ -20,9 +20,10 @@ export default function Sidebar() {
     const user = usePage().props.auth.user;
 
     const rolesGroupActive =
-        route().current('admin.roles.index') ||
-        route().current('admin.permissions.index') ||
-        route().current('admin.role-assignments.index');
+    route().current('admin.roles.*') ||
+    route().current('admin.permissions.*') ||
+    route().current('admin.role-assignments.*');
+
 
     return (
         <aside
@@ -210,21 +211,21 @@ export default function Sidebar() {
                         >
                             <SidebarItem
                                 href={route('admin.roles.index')}
-                                routeName="admin.roles.index"
+                                routeName="admin.roles.*"
                                 icon={UserCircleIcon}
                                 text="Manage Roles"
                             />
 
                             <SidebarItem
                                 href={route('admin.permissions.index')}
-                                routeName="admin.permissions.index"
+                                routeName="admin.permissions.*"
                                 icon={KeyIcon}
                                 text="Manage Permissions"
                             />
 
                             <SidebarItem
                                 href={route('admin.role-assignments.index')}
-                                routeName="admin.role-assignments.index"
+                                routeName="admin.role-assignments.*"
                                 icon={UserPlusIcon}
                                 text="Assign Roles to Users"
                             />

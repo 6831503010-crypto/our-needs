@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\PermissionRegistrar;
 
 class RoleController extends Controller
 {
@@ -38,26 +40,50 @@ class RoleController extends Controller
         ]);
     }
 
+    // public function store(Request $request)
+    // {
+    //     $data = $request->validate([
+    //         'name'         => ['required', 'string', 'max:255', 'unique:roles,name'],
+    //         'guard_name'   => ['nullable', 'string', 'max:255'],
+    //         'permissions'  => ['array'],
+    //         'permissions.*' => ['integer', 'exists:permissions,id'],
+    //     ]);
+
+    //     $guard = $data['guard_name'] ?? 'web';
+
+    //     $role = Role::create([
+    //         'name'       => $data['name'],
+    //         'guard_name' => $guard,
+    //     ]);
+
+    //     if (!empty($data['permissions'])) {
+    //         $perms = Permission::whereIn('id', $data['permissions'])->get();
+    //         $role->syncPermissions($perms);
+    //     }
+
+    //     return redirect()
+    //         ->route('admin.roles.index')
+    //         ->with('success', 'Role created.');
+    // }
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'name'         => ['required', 'string', 'max:255', 'unique:roles,name'],
-            'guard_name'   => ['nullable', 'string', 'max:255'],
-            'permissions'  => ['array'],
-            'permissions.*' => ['integer', 'exists:permissions,id'],
-        ]);
+        $permissionNames = Permission::pluck('name')->toArray();
 
-        $guard = $data['guard_name'] ?? 'web';
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255', Rule::unique('roles', 'name')],
+            'guard_name' => ['nullable', 'string', 'max:255'],
+            'permissions' => ['required', 'array', 'min:1'],            // ✅ at least one
+            'permissions.*' => ['string', Rule::in($permissionNames)],  // ✅ valid permission name
+        ]);
 
         $role = Role::create([
-            'name'       => $data['name'],
-            'guard_name' => $guard,
+            'name' => trim($data['name']),
+            'guard_name' => $data['guard_name'] ?? 'web',
         ]);
 
-        if (!empty($data['permissions'])) {
-            $perms = Permission::whereIn('id', $data['permissions'])->get();
-            $role->syncPermissions($perms);
-        }
+        $role->syncPermissions($data['permissions']);
+
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         return redirect()
             ->route('admin.roles.index')
@@ -73,39 +99,76 @@ class RoleController extends Controller
                 'id'          => $role->id,
                 'name'        => $role->name,
                 'guard_name'  => $role->guard_name,
-                'permissions' => $role->permissions->pluck('id'), // selected IDs
+                'permissions' => $role->permissions->pluck('name')->values(), // selected IDs
             ],
             'permissions' => Permission::orderBy('name')
                 ->get(['id', 'name', 'guard_name']),
         ]);
     }
 
+    // public function update(Request $request, Role $role)
+    // {
+    //     $data = $request->validate([
+    //         'name'         => ['required', 'string', 'max:255', 'unique:roles,name,' . $role->id],
+    //         'guard_name'   => ['nullable', 'string', 'max:255'],
+    //         'permissions'  => ['array'],
+    //         'permissions.*' => ['integer', 'exists:permissions,id'],
+    //     ]);
+
+    //     // optional: protect core roles from renaming
+    //     if (in_array($role->name, ['admin', 'student', 'teacher'])) {
+    //         // allow updating permissions but not renaming the role
+    //         $roleName = $role->name;
+    //     } else {
+    //         $roleName = $data['name'];
+    //     }
+
+    //     $role->name       = $roleName;
+    //     $role->guard_name = $data['guard_name'] ?? $role->guard_name ?? 'web';
+    //     $role->save();
+
+    //     $perms = !empty($data['permissions'])
+    //         ? Permission::whereIn('id', $data['permissions'])->get()
+    //         : collect();
+
+    //     $role->syncPermissions($perms);
+
+    //     return redirect()
+    //         ->route('admin.roles.index')
+    //         ->with('success', 'Role updated.');
+    // }
     public function update(Request $request, Role $role)
     {
+        $permissions = Permission::pluck('name')->toArray(); // allowed permission names
+
         $data = $request->validate([
-            'name'         => ['required', 'string', 'max:255', 'unique:roles,name,' . $role->id],
-            'guard_name'   => ['nullable', 'string', 'max:255'],
-            'permissions'  => ['array'],
-            'permissions.*' => ['integer', 'exists:permissions,id'],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('roles', 'name')->ignore($role->id),
+            ],
+            'permissions' => ['nullable', 'array'],
+            'permissions.*' => ['string', Rule::in($permissions)],
         ]);
 
-        // optional: protect core roles from renaming
-        if (in_array($role->name, ['admin', 'student', 'teacher'])) {
-            // allow updating permissions but not renaming the role
-            $roleName = $role->name;
-        } else {
-            $roleName = $data['name'];
+        // Optional locked roles (same vibe as your locked permissions)
+        $lockedRoles = [
+            // 'admin',
+            // 'teacher',
+            // 'student',
+        ];
+
+        if (!in_array($role->name, $lockedRoles, true)) {
+            $role->name = $data['name'];
+            $role->save();
         }
 
-        $role->name       = $roleName;
-        $role->guard_name = $data['guard_name'] ?? $role->guard_name ?? 'web';
-        $role->save();
+        // Sync permissions by NAME (because your form sends names)
+        $role->syncPermissions($data['permissions'] ?? []);
 
-        $perms = !empty($data['permissions'])
-            ? Permission::whereIn('id', $data['permissions'])->get()
-            : collect();
-
-        $role->syncPermissions($perms);
+        // Important if you're using Spatie caching
+        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 
         return redirect()
             ->route('admin.roles.index')

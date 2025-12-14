@@ -45,6 +45,12 @@ Route::middleware([
     Route::get('/role-assignments', [RoleAssignmentController::class, 'index'])
         ->name('role-assignments.index');
 
+    Route::get('/role-assignments/{user}/edit', [RoleAssignmentController::class, 'edit'])
+        ->name('role-assignments.edit');
+
+    Route::put('/role-assignments/{user}', [RoleAssignmentController::class, 'update'])
+        ->name('role-assignments.update');
+
     Route::post('/role-assignments/{user}/assign', [RoleAssignmentController::class, 'assign'])
         ->name('role-assignments.assign');
 

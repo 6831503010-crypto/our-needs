@@ -1,5 +1,9 @@
+import Pagination from '@/Components/Pagination';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head,Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
+import EditButton from '@/Components/EditButton';
+import DeleteButton from '@/Components/DeleteButton';
+import AddButton from '@/Components/AddButton';
 
 export default function TeachersIndex({ auth, teachers = [] }) {
     const rows = teachers?.data || [];
@@ -17,9 +21,12 @@ export default function TeachersIndex({ auth, teachers = [] }) {
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden rounded-lg bg-white shadow">
                         <div className="p-6">
-                            <p className="mb-4 text-gray-700">
-                                Here you will manage teacher accounts and permissions.
-                            </p>
+                            <div className="mb-4 flex items-center justify-between">
+                                <p className="text-gray-700">
+                                    Here you will manage teacher accounts and profiles.
+                                </p>
+                                <AddButton href={"#"} label="Add new teacher"/>
+                            </div>
 
                             <table className="min-w-full divide-y divide-gray-200 text-sm">
                                 <thead className="bg-gray-50">
@@ -55,9 +62,10 @@ export default function TeachersIndex({ auth, teachers = [] }) {
                                                 {teacher.email}
                                             </td>
                                             <td className="px-4 py-2 text-sm text-indigo-600">
-                                                <button className="hover:underline">
-                                                    View
-                                                </button>
+                                                <div className="flex items-center gap-4 text-sm">
+                                                    <EditButton href={"#"} label={"Edit"} />
+                                                    <DeleteButton href={"#"} label={"Delete"} />
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}
@@ -69,21 +77,7 @@ export default function TeachersIndex({ auth, teachers = [] }) {
                                     <div className="text-xs text-gray-500">
                                         Page {teachers.current_page} of {teachers.last_page}
                                     </div>
-
-                                    <div className="flex flex-wrap gap-1">
-                                        {teachers.links.map((link, i) => (
-                                            <Link
-                                                key={i}
-                                                href={link.url || '#'}
-                                                preserveScroll
-                                                className={`rounded-md px-3 py-1 text-xs
-                                                    ${link.url ? 'hover:bg-gray-100' : 'text-gray-400 cursor-default'}
-                                                    ${link.active ? 'bg-indigo-600 text-white hover:bg-indigo-600' : 'text-gray-700'}
-                                                `}
-                                                dangerouslySetInnerHTML={{ __html: link.label }}
-                                            />
-                                        ))}
-                                    </div>
+                                    <Pagination links={teachers.links} />
                                 </div>
                             )}
                         </div>

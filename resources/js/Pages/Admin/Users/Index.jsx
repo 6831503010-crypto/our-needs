@@ -1,5 +1,9 @@
+import EditButton from '@/Components/EditButton';
+import Pagination from '@/Components/Pagination';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head,Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
+import DeleteButton from '@/Components/DeleteButton';
+import AddButton from '@/Components/AddButton';
 
 export default function UsersIndex({ auth, users = [] }) {
     const rows = users?.data || [];
@@ -17,9 +21,12 @@ export default function UsersIndex({ auth, users = [] }) {
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden rounded-lg bg-white shadow">
                         <div className="p-6">
-                            <p className="mb-4 text-gray-700">
-                                Here you will manage all users in the system (students, teachers, admins).
-                            </p>
+                            <div className="mb-4 flex items-center justify-between">
+                                <p className="text-gray-700">
+                                    Here you will manage all users in the system (students, teachers, admins).
+                                </p>
+                                <AddButton href={"#"} label="Add new user"/>
+                            </div>
 
                             <table className="min-w-full divide-y divide-gray-200 text-sm">
                                 <thead className="bg-gray-50">
@@ -61,9 +68,10 @@ export default function UsersIndex({ auth, users = [] }) {
                                                 {(user.roles || []).join(', ')}
                                             </td>
                                             <td className="px-4 py-2 text-sm text-indigo-600">
-                                                <button className="hover:underline">
-                                                    Edit
-                                                </button>
+                                                <div className="flex items-center gap-4 text-sm">
+                                                    <EditButton href={"#"} label={"Edit"} />
+                                                    <DeleteButton href={"#"} label={"Delete"} />
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}
@@ -77,20 +85,7 @@ export default function UsersIndex({ auth, users = [] }) {
                                         Page {users.current_page} of {users.last_page}
                                     </div>
 
-                                    <div className="flex flex-wrap gap-1">
-                                        {users.links.map((link, i) => (
-                                            <Link
-                                                key={i}
-                                                href={link.url || '#'}
-                                                preserveScroll
-                                                className={`rounded-md px-3 py-1 text-xs
-                                                    ${link.url ? 'hover:bg-gray-100' : 'text-gray-400 cursor-default'}
-                                                    ${link.active ? 'bg-indigo-600 text-white hover:bg-indigo-600' : 'text-gray-700'}
-                                                `}
-                                                dangerouslySetInnerHTML={{ __html: link.label }}
-                                            />
-                                        ))}
-                                    </div>
+                                    <Pagination links={users.links} />
                                 </div>
                             )}
 
