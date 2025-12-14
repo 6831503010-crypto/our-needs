@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
 use App\Models\Quiz;
 use Inertia\Inertia;
+use App\Models\Event;
+use App\Mail\EventReminderMail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class StudentPanelController extends Controller
 {
@@ -134,4 +136,5 @@ class StudentPanelController extends Controller
     {
         return Inertia::render('Student/Quizzes/Result', ['id' => $id]);
     }
+
 }

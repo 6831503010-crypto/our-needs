@@ -1,8 +1,11 @@
 <?php
 
 use App\Models\User;
+use App\Models\Event;
 use App\Models\Section;
 use App\Models\Teacher;
+use App\Mail\EventReminderMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Notifications\EventNotification;
 use App\Http\Controllers\StudentPanelController;
@@ -28,16 +31,6 @@ Route::get('/test-notify', function () {
     return 'Notification sent!';
 });
 
-Route::get('/users', function () {
-    $users = User::all();
-    return response()->json([$users]);
-});
-
-Route::get('/sections', function () {
-    $teachers = Section::all();
-    return response()->json($teachers);
-});
-
 Route::post('/notifications/{id}/read', function ($id) {
     $notification = request()->user()->unreadNotifications()->find($id);
 
@@ -47,3 +40,16 @@ Route::post('/notifications/{id}/read', function ($id) {
 
     return back();
 })->middleware(['auth', 'verified'])->name('notifications.read');
+
+
+Route::get('/test-event-reminder', function () {
+    $event = (object) [
+        'title' => 'Test Event',
+        'starts_at' => now()->addDay(),
+        'location' => 'Online',
+    ];
+    Mail::to('your@email.com')
+        ->send(new EventReminderMail($event));
+
+    return 'Event reminder email sent!';
+});

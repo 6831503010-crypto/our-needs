@@ -16,11 +16,13 @@ class EventReservation extends Model
         'email',
         'google_response_id',
         'status',
+        'reminded_at',
         'reserved_at',
         'raw_payload',
     ];
 
     protected $casts = [
+        'reminded_at' => 'datetime',
         'reserved_at' => 'datetime',
         'raw_payload' => 'array',
     ];
@@ -32,6 +34,6 @@ class EventReservation extends Model
 
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(User::class, 'student_id');
     }
 }
