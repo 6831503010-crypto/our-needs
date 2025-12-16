@@ -34,13 +34,31 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
         $user = $request->user();
 
-        $defaultRoute = match ($user->getRoleNames()[0]) {
-            'admin' => 'admin.analytics',
-            'teacher' => 'teacher.quizzes',
-            'student' => 'student.quizzes',
-            default => 'dashboard'
-        };
-        return redirect()->intended(route($defaultRoute));
+        // Admin always goes to analytics
+        if ($user->hasRole('admin')) {
+            return redirect()->intended(route('admin.analytics'));
+        }
+
+        // Teacher routing
+        if ($user->hasRole('teacher')) {
+            return redirect()->intended(
+                $user->can('view quizzes')
+                    ? route('teacher.quizzes')
+                    : route('teacher.events')
+            );
+        }
+
+        // Student routing
+        if ($user->hasRole('student')) {
+            return redirect()->intended(
+                $user->can('view quizzes')
+                    ? route('student.quizzes')
+                    : route('student.events')
+            );
+        }
+
+        // Fallback (just in case)
+        return redirect()->intended(route('dashboard'));
     }
 
     /**

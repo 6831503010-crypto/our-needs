@@ -60,7 +60,7 @@ export default function SidebarDropdown({
 }) {
     // const [open, setOpen] = useState(false);
     // This resets the state every time the component re-renders
-    
+
     const [open, setOpen] = useState(isActiveGroup);
 
     // ✅ If you navigate to a child route, auto-open the group
@@ -81,7 +81,7 @@ export default function SidebarDropdown({
                 className="w-full flex items-center justify-between gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-slate-100 transition"
             >
                 <div className="flex items-center gap-3">
-                    {Icon && <Icon className="w-5 h-5 text-indigo-600" />}
+                    {Icon && <Icon className="w-5 h-5 text-indigo-600 ml-1" />}
                     <span>{label}</span>
                 </div>
 

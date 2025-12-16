@@ -25,11 +25,17 @@ Route::get('/dashboard', function (Request $request) {
     }
 
     if ($user->hasRole('teacher')) {
-        return redirect()->route('teacher.quizzes');
+        if ($user->can('create quizzes')) {
+            return redirect()->route('teacher.quizzes');
+        }
+        return redirect()->route('teacher.events');
     }
 
     if ($user->hasRole('student')) {
-        return redirect()->route('student.quizzes');
+        if ($user->can('view quizzes')) {
+            return redirect()->route('student.quizzes');
+        }
+        return redirect()->route('student.events');
     }
 
     // fallback if somehow no role

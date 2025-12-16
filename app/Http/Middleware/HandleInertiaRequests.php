@@ -38,7 +38,12 @@ class HandleInertiaRequests extends Middleware
                         'name'  => $request->user()->name,
                         'email' => $request->user()->email,
                         //this is from Spatie
-                        'roles' => $request->user()->getRoleNames(), // ["student", "teacher", ...]
+                        'roles' => method_exists($request->user(), 'getRoleNames')
+                            ? $request->user()->getRoleNames()
+                            : [], // ["student", "teacher", ...]
+                        'permissions' => method_exists($request->user(), 'getAllPermissions')
+                            ? $request->user()->getAllPermissions()->pluck('name')->values()
+                            : [],
                     ]
                     : null,
 

@@ -17,7 +17,9 @@ import SidebarDropdown from '@/Components/SidebarDropdown';
 import SidebarItem from '@/Components/SidebarItem';
 
 export default function Sidebar() {
+
     const user = usePage().props.auth.user;
+    const can = (permission) => user?.permissions?.includes(permission);
 
     const rolesGroupActive =
     route().current('admin.roles.*') ||
@@ -61,12 +63,15 @@ export default function Sidebar() {
                         //     />
                         // </>
                         <>
-                            <SidebarItem
+                            {can('view quizzes') && (
+                                <SidebarItem
                                 href={route('student.quizzes')}
                                 routeName="student.quizzes"
                                 icon={ClipboardDocumentListIcon}
                                 text="Quizzes"
                             />
+                            )}
+
 
                             <SidebarItem
                                 href={route('student.events')}
@@ -103,12 +108,14 @@ export default function Sidebar() {
                         //     />
                         // </>
                         <>
-                            <SidebarItem
+                            {can('create quizzes') && (
+                                <SidebarItem
                                 href={route('teacher.quizzes')}
                                 routeName="teacher.quizzes"
                                 icon={ClipboardDocumentListIcon}
                                 text="Quizzes"
                             />
+                            )}
 
                             <SidebarItem
                                 href={route('teacher.events')}
@@ -197,12 +204,14 @@ export default function Sidebar() {
                             text="Manage Teachers"
                         />
 
-                        <SidebarItem
-                            href={route('admin.users.index')}
-                            routeName="admin.users.index"
-                            icon={UserGroupIcon}
-                            text="Manage Users"
-                        />
+                        {can('manage users') && (
+                                <SidebarItem
+                                    href={route('admin.users.index')}
+                                    routeName="admin.users.index"
+                                    icon={UserGroupIcon}
+                                    text="Manage Users"
+                                />
+                        )}
 
                         <SidebarDropdown
                             label="Roles & Permissions"

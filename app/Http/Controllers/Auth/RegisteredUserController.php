@@ -48,7 +48,13 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-
-        return redirect(route('student.quizzes', absolute: false));
+        // Student routing
+        if ($user->hasRole('student')) {
+            return redirect()->intended(
+                $user->can('view quizzes')
+                    ? route('student.quizzes', absolute: false)
+                    : route('student.events', absolute: false)
+            );
+        }
     }
 }
