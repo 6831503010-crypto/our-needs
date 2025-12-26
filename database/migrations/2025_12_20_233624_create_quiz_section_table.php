@@ -9,19 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-
     public function up(): void
     {
-        Schema::create('sections', function (Blueprint $table) {
+        Schema::create('quiz_section', function (Blueprint $table) {
             $table->id();
-
-            $table->integer('number');
-            $table->foreignId('subject_id')->constrained()->onDelete('cascade');
-            $table->foreignId('teacher_id')
-                ->constrained('teachers')
-                ->cascadeOnDelete();
-            $table->string('schedule')->nullable();
-
+            $table->foreignId('quiz_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('section_id')->constrained()->cascadeOnDelete();
+            $table->dateTime('open_at');
+            $table->dateTime('close_at');
+            $table->integer('attempt_limit')->default(1);
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists('quiz_section');
     }
 };

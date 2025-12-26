@@ -110,8 +110,8 @@ export default function Sidebar() {
                         <>
                             {can('create quizzes') && (
                                 <SidebarItem
-                                href={route('teacher.quizzes')}
-                                routeName="teacher.quizzes"
+                                href={route('teacher.quizzes.index')}
+                                routeName="teacher.quizzes.index"
                                 icon={ClipboardDocumentListIcon}
                                 text="Quizzes"
                             />

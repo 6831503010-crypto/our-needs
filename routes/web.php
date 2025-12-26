@@ -26,7 +26,7 @@ Route::get('/dashboard', function (Request $request) {
 
     if ($user->hasRole('teacher')) {
         if ($user->can('create quizzes')) {
-            return redirect()->route('teacher.quizzes');
+            return redirect()->route('teacher.quizzes.index');
         }
         return redirect()->route('teacher.events');
     }

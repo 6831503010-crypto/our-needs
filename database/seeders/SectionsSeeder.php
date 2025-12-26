@@ -28,19 +28,19 @@ class SectionsSeeder extends Seeder
             [
                 'subject_id' => $createdSubjects[0]->id,
                 'number' => 1,
-                'teacher_id' => 5, // hardcoded, ignored for now
+                'teacher_id' => 1, // hardcoded, ignored for now
                 'schedule' => 'Wednesday 11:30',
             ],
             [
                 'subject_id' => $createdSubjects[0]->id,
                 'number' => 2,
-                'teacher_id' => 8,
+                'teacher_id' => 2,
                 'schedule' => 'Thursday 13:00',
             ],
             [
                 'subject_id' => $createdSubjects[1]->id,
                 'number' => 1,
-                'teacher_id' => 7,
+                'teacher_id' => 3,
                 'schedule' => 'Friday 09:00',
             ],
         ];

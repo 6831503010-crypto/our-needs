@@ -25,4 +25,9 @@ class Student extends Model
     {
         return $this->belongsToMany(Section::class);
     }
+
+    public function quizAttempts()
+    {
+        return $this->hasMany(QuizAttempt::class);
+    }
 }

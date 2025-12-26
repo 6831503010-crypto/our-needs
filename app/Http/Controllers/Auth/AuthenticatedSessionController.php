@@ -43,7 +43,7 @@ class AuthenticatedSessionController extends Controller
         if ($user->hasRole('teacher')) {
             return redirect()->intended(
                 $user->can('view quizzes')
-                    ? route('teacher.quizzes')
+                    ? route('teacher.quizzes.index')
                     : route('teacher.events')
             );
         }

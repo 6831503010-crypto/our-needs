@@ -23,19 +23,19 @@ return new class extends Migration
                 ->cascadeOnDelete(); // must be a student
 
             $table->string('google_response_id')->nullable();
-
             $table->decimal('score', 5, 2)->nullable();
             $table->timestamp('submitted_at')->nullable();
 
-            $table->enum('status', ['unattempted', 'submitted', 'late', 'invalid'])
-                ->default('unattempted')
-                ->index();
+            //// Created the quiz_section pivote table to manage quiz availability per section
+            // $table->enum('status', ['unattempted', 'submitted', 'late', 'invalid'])
+            //     ->default('unattempted')
+            //     ->index();
 
-            $table->json('raw_payload')->nullable();
-
+            // $table->json('raw_payload')->nullable();
             $table->timestamps();
 
-            $table->unique(['quiz_id', 'student_id']); // one attempt per quiz per student (optional)
+            // // Ajs can allow quiz attempts more than once
+            // $table->unique(['quiz_id', 'student_id']); // one attempt per quiz per student (optional)
         });
     }
 

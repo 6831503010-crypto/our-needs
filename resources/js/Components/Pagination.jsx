@@ -10,7 +10,7 @@ export default function Pagination({ links }) {
                     <Link
                         key={key}
                         href={link.url}
-                        className={`px-4 py-2 text-sm border rounded-md ${link.active
+                        className={`px-4 py-2 mx-1 text-sm border rounded-md ${link.active
                                 ? 'bg-indigo-600 text-white border-indigo-600'
                                 : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
                             }`}

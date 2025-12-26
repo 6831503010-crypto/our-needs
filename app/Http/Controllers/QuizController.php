@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Quiz;
+// use Illuminate\Container\Attributes\Auth;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
@@ -11,7 +15,15 @@ class QuizController extends Controller
      */
     public function index()
     {
-        //
+        // Teacher quiz index ui show
+
+        $quizzes = Quiz::whereHas('teacher', function ($query) {
+            $query->where('user_id', Auth::user()->id);
+        })->get();
+
+        return Inertia::render('Teacher/Quizzes/Index', [
+            'quizzes' => $quizzes
+        ]);
     }
 
     /**

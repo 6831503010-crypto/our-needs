@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('teacher_id')
                 ->constrained('teachers')
-                ->cascadeOnDelete(); // must be a teacher
+                ->cascadeOnDelete();
+
+            $table->foreignId('subject_id')
+                ->constrained('subjects')
+                ->cascadeOnDelete();
 
             $table->string('title');
             $table->text('description')->nullable();
@@ -26,8 +30,8 @@ return new class extends Migration
 
             $table->unsignedInteger('max_score')->nullable();
 
-            $table->timestamp('open_at')->nullable();
-            $table->timestamp('close_at')->nullable();
+            // $table->timestamp('open_at')->nullable();
+            // $table->timestamp('close_at')->nullable();
 
             $table->boolean('is_published')->default(false)->index();
 

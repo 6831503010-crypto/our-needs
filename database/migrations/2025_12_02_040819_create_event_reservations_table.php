@@ -31,7 +31,9 @@ return new class extends Migration {
                 ->default('pending')
                 ->index();
 
-            $table->timestamp('reminded_at')->nullable()->after('reserved_at');
+            $table->timestamp('reminded_at')->nullable();
+            // $table->timestamp('reminded_at')->nullable()->after('reserved_at');
+
 
             $table->timestamp('reserved_at')->nullable();
 

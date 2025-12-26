@@ -19,15 +19,15 @@ class Quiz extends Model
         'google_form_id',
         'google_sheet_id',
         'max_score',
-        'open_at',
-        'close_at',
+        // 'open_at',
+        // 'close_at',
         'is_published',
         'meta',
     ];
 
     protected $casts = [
-        'open_at' => 'datetime',
-        'close_at' => 'datetime',
+        // 'open_at' => 'datetime',
+        // 'close_at' => 'datetime',
         'is_published' => 'boolean',
         'meta' => 'array',
     ];
@@ -40,5 +40,17 @@ class Quiz extends Model
     public function attempts()
     {
         return $this->hasMany(QuizAttempt::class);
+    }
+
+    public function sections()
+    {
+        return $this->belongsToMany(Section::class)
+            ->withPivot(['open_at', 'close_at'])
+            ->withTimestamps();
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
     }
 }
